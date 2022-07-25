@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        function abrir(){
+            var codigo = document.getElementById("codigo").value
+            var fecha = document.getElementById("fecha").value
+            var descripccion = document.getElementById("descripccion").value
+            var valor = document.getElementById("valor").value
+            ayax = new XMLHttpRequest()
+            ayax.onload = function(){
+                console.log(this.responseText)
+            }
+            ayax.open("POST", "http://127.0.0.1/team2gont/abreEvento.php")
+            ayax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
+            ayax.send("codigo="+codigo+"&fecha="+fecha+"&descripcion="+descripccion+"&valor="+valor);
+        }
+    </script>
+</head>
+<body>
+    <a href="http://127.0.0.1/team2gont/">home</a>/CrearEvento <br>
+    codigo<input type="text" id="codigo"><br>
+    fecha <input type="date" name="fecha" id="fecha"><br>
+    descripcion <input type="text" name="descripccion" id="descripccion"><br>
+    valor <input type="number" name="valor" id="valor"><br>
+    <button onclick="abrir()">crear</button>
+</body>
+</html>

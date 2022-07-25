@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio Sesion</title>
+    <script>
+        function picar(){
+            //Establecemos el Timestamp actual en el formato de Mysql
+            const weekday = ["Domingo","lunes","martes","miercoles","jueves","Viernes","Sabado"];
+            const d = new Date();
+            let day = weekday[d.getDay()];
+            var timestamp = new Date().toISOString().split('T')[0] + ' ' +new Date().toTimeString().split(' ')[0];
+            var ayax = new XMLHttpRequest()
+            if (document.getElementById("user").value != ""){
+                    var nombre = document.getElementById("user").value
+                    ayax.onload = function(){
+                        console.log(this.responseText)
+                    if (this.responseText == "Y"){
+                        window.alert("Picada correcta")
+                        GanarPuntos(day)
+                    }else{
+                        window.alert("Picada fallida")
+                    }
+                }
+                ayax.open("POST", "http://127.0.0.1/team2gont/picar.php")
+                ayax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                ayax.send("timestamp="+timestamp+"&nombre="+nombre)
+            }else{
+                window.alert("ingresa usuario")
+            }
+        }
+        function GanarPuntos(dia){
+            var ayax = new XMLHttpRequest()
+            ayax.onload= function(){
+                console.log(this.responseText)
+            }
+            ayax.open("POST", "http://127.0.0.1/team2gont/Brownie/scripts/picar.php")
+            ayax.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            ayax.send("dia="+dia)
+        }
+    </script>
+</head>
+<body>
+
+    Usuario<input type="text" name="user" id="user"><br>
+    <button onclick="picar()">picar</button>
+
+</body>
+</html>
